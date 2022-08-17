@@ -30,85 +30,80 @@ class _WithDrawRequestState extends State<WithDrawRequest> {
 
   @override
   Widget build(BuildContext context) {
+     final double h = MediaQuery.of(context).size.height;
+    final double w = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Withdraw Request"),
+        title: const Text("Withdraw Request"),
       ),
-
-      body: widget.modelUser.lastWithdraw==null||DateTime.now().difference(widget.modelUser.lastWithdraw!).inDays>30?Column(
-        children: [
-          Text("Your current balance: ${widget.modelUser.balance}"),
-          TextField(
-
-            controller: number,
-            keyboardType: TextInputType.phone,
-            decoration: InputDecoration(
-
-              hintText: "Bkash Number",
-              border: OutlineInputBorder(
-
-              )
-            ),
-
-          ),
-
-          TextField(
-            onChanged: (v){
-            double k = double.parse(v);
-            if(k<=widget.modelUser.balance){
-              this.setState(() {
-                canWithdraw = true;
-              });
-            }else{
-              this.setState(() {
-                canWithdraw = false;
-              });
-
-            }
-          },
-            controller: amount,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-
-                hintText: "Amount you want to withdraw",
-                border: OutlineInputBorder(
-
+      body: widget.modelUser.lastWithdraw == null ||
+              DateTime.now().difference(widget.modelUser.lastWithdraw!).inDays >
+                  30
+          ? Column(
+              children: [
+                Text("Your current balance: ${widget.modelUser.balance}"),
+                TextField(
+                  controller: number,
+                  keyboardType: TextInputType.phone,
+                  decoration: const InputDecoration(
+                      hintText: "Bkash Number", border: OutlineInputBorder()),
+                ),
+                TextField(
+                  onChanged: (v) {
+                    double k = double.parse(v);
+                    if (k <= widget.modelUser.balance) {
+                      setState(() {
+                        canWithdraw = true;
+                      });
+                    } else {
+                      setState(() {
+                        canWithdraw = false;
+                      });
+                    }
+                  },
+                  controller: amount,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                      hintText: "Amount you want to withdraw",
+                      border: OutlineInputBorder()),
+                ),
+                Visibility(
+                  visible: canWithdraw,
+                  child: TextButton(
+                      onPressed: () {
+                        setState(() {
+                          processing = true;
+                        });
+                        fireBase
+                            .withdrawRequest(WithdrawModel(
+                                uid: widget.modelUser.uid,
+                                amount: double.parse(amount.text.trim()),
+                                number: number.text.trim()))
+                            .then((value) {
+                          setState(() {
+                            result = value;
+                          });
+                        });
+                        fireBase.addLastWithdraw();
+                        fireBase.myProfile().then((value) {
+                          setState(() {
+                            widget.modelUser = value;
+                          });
+                        });
+                      },
+                      child: const Text("Withdraw")),
+                ),
+                Visibility(
+                  visible: processing,
+                  child: result
+                      ? const Text("Your request is received, wait for the approval")
+                      : const Text("Processing request"),
                 )
+              ],
+            )
+          : const Center(
+              child: Text("Cant withdraw now"),
             ),
-
-
-          ),
-
-          Visibility(
-            visible: canWithdraw,
-            child: TextButton(
-                onPressed: (){
-                  this.setState(() {
-                    processing=true;
-                  });
-                  fireBase.withdrawRequest(WithdrawModel(uid: widget.modelUser.uid, amount: double.parse(amount.text.trim()), number: number.text.trim())).then((value) {
-                    this.setState(() {
-                      result = value;
-                    });
-                  });
-                  fireBase.addLastWithdraw();
-                  fireBase.myProfile().then((value){
-                    this.setState(() {
-                      widget.modelUser = value;
-                    });
-                  });
-
-            }, child: Text("Withdraw")),
-          ),
-
-          Visibility(
-            visible: processing,
-            child: result?Text("Your request is received, wait for the approval"):Text("Processing request"),
-          )
-
-
-        ],
-      ):Center(child: Text("Cant withdraw now"),),
     );
   }
 }

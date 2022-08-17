@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:icbapps/helper/auth/auth.dart';
 import 'package:icbapps/models/ModelUser.dart';
+import 'package:icbapps/screens/widgets/header_widget.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -56,15 +58,26 @@ class _DailyWorkState extends State<DailyWork> {
 
   @override
   Widget build(BuildContext context) {
-
+    final double h = MediaQuery.of(context).size.height;
+    final double w = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Text("You have ${5-videosToshow} tasks pending for today"),
+      backgroundColor: Colors.white,
+      body: Stack(
+        children: [
+           SizedBox(
+                          height: 250,
+                          child: HeaderWidget(
+                              240, false, Icons.person_add_alt_1_rounded),
+                        ),
+          Padding(
+            padding:  EdgeInsets.only(top: h*0.1,left: w*0.16),
+            child: Text("You have ${5-videosToshow} tasks pending for today", style: GoogleFonts.oleoScript(
+                                         color: Colors.white,fontSize: 20,)),
+          ),
 
-            Visibility(
+          Padding(
+            padding:  EdgeInsets.only(top: h*0.4,left: w*0.4),
+            child: Visibility(
               visible: videosToshow<5?true:false,
               child: TextButton(onPressed: (){
                 if(loaded){
@@ -106,8 +119,8 @@ class _DailyWorkState extends State<DailyWork> {
 
               },child: Text(!loaded?"load first":"show Add"),),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

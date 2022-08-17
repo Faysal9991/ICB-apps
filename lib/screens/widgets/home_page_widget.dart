@@ -6,43 +6,46 @@ import 'package:hexcolor/hexcolor.dart';
 class HomePageBox extends StatelessWidget {
    HomePageBox({
     Key? key,
-    required this.h,
-    required this.w,
-    required this.iconName,
-    required this.theicon,
+     this.hight,
+     this.width,
+     this.iconSize,
+     this.iconName,
+     this.theicon,
     required this.goingScreen
   }) : super(key: key);
 
-  final double h;
-  final double w;
-  IconData theicon;
-  String iconName;
+  final double? hight;
+  final double? width;
+  final double? iconSize;
+  IconData ?theicon;
+  String ?iconName;
   VoidCallback goingScreen;
 
   @override
   Widget build(BuildContext context) {
+    final double h = MediaQuery.of(context).size.height;
     return InkWell(
       onTap: goingScreen,
       child: Container(
-          height: h * 0.17,
-          width: w / 3,
+          height: hight,
+          width: width,
           decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomLeft,
                 colors: [HexColor('#DC54FE'), HexColor('#8A02AE')],
               ),
-              borderRadius: BorderRadius.circular(20)),
+              borderRadius: BorderRadius.circular(10)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
                 theicon,
                 color: Colors.green,
-                size: h * 0.06,
+                size: iconSize,
               ),
               SizedBox(height: h*0.01,),
-              Text(iconName, style: GoogleFonts.oleoScript(color: Colors.white))
+              Text(iconName!, style: GoogleFonts.oleoScript(color: Colors.white))
             ],
           )),
     );

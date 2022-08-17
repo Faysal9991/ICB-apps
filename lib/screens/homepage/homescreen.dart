@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,6 +11,7 @@ import 'package:icbapps/history.dart';
 import 'package:icbapps/models/ModelUser.dart';
 import 'package:icbapps/models/admin.dart';
 import 'package:icbapps/recharge.dart';
+import 'package:icbapps/screens/loginorsignup/loginorsignup.dart';
 import 'package:icbapps/screens/registerpage/registerscreen.dart';
 import 'package:icbapps/screens/widgets/header_widget.dart';
 import 'package:icbapps/screens/widgets/home_page_widget.dart';
@@ -157,55 +159,54 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Padding(
                           padding:
-                              EdgeInsets.only(top: h * 0.32, left: w * 0.09),
+                              EdgeInsets.only(top: h * 0.32,),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  // .....................work...................//
-                                  HomePageBox(
-                                      h: h,
-                                      w: w,
-                                      iconName: "WORk",
-                                      theicon: FontAwesomeIcons.briefcase,
-                                      goingScreen: () {
-                                        Navigator.of(context)
-                                            .push(MaterialPageRoute(
-                                                builder: (context) => DailyWork(
-                                                      modelUser: snapshot.data!,
-                                                    )));
-                                      }),
-
-                                  SizedBox(
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: HomePageBox( 
+                                        hight: h*0.09,
+                                        width: w,
+                                        iconName: "WORk",
+                                        theicon: FontAwesomeIcons.briefcase,
+                                        goingScreen: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                                  builder: (context) => DailyWork(
+                                                        modelUser: snapshot.data!,
+                                                      )));
+                                        }),
+                              ),
+                                SizedBox(
                                     width: w * 0.1,
                                   ),
 
                                   //..........................recarge.............//
-                                  HomePageBox(
-                                      h: h,
-                                      w: w,
-                                      iconName: "Recharge",
-                                      theicon: FontAwesomeIcons.bolt,
-                                      goingScreen: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const RechargeScreen()));
-                                      })
-                                ],
-                              ),
-                              SizedBox(
-                                height: h * 0.05,
-                              ),
-                              Row(
-                                children: [
-                                  //.................hestory................//
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: HomePageBox(
+                                        hight: h*0.09,
+                                          width: w,
+                                        iconName: "Recharge",
+                                        theicon: FontAwesomeIcons.bolt,
+                                        goingScreen: () {
+                                          Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const RechargeScreen()));
+                                                      }),),
+                                                        SizedBox(
+                                    width: w * 0.1,
+                                  ),
 
-                                  HomePageBox(
-                                      h: h,
-                                      w: w,
-                                      iconName: "History",
+                                  //..........................recarge.............//
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: HomePageBox(
+                                        hight: h*0.09,
+                                          width: w,
+                                         iconName: "History",
                                       theicon: FontAwesomeIcons.history,
                                       goingScreen: () {
                                         Navigator.of(context).push(
@@ -214,56 +215,79 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     HistoryScreen(
                                                       modelUser: snapshot.data!,
                                                     )));
-                                      }),
-
-                                  SizedBox(
+                                                      }),),
+                                                       SizedBox(
                                     width: w * 0.1,
                                   ),
-                                  HomePageBox(
-                                      h: h,
-                                      w: w,
-                                      iconName: "Registrion",
-                                      theicon: FontAwesomeIcons.idCard,
-                                      goingScreen: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    RegisterScreen()));
-                                      })
-                                ],
-                              ),
-                              SizedBox(
-                                height: h * 0.05,
-                              ),
-                              Row(
-                                children: [
-                                  HomePageBox(
-                                      goingScreen: () {
+
+                                  //..........................recarge.............//
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: HomePageBox(
+                                        hight: h*0.09,
+                                          width: w,
+                                          theicon: FontAwesomeIcons.wallet,
+                                      iconName: "Withraw",
+                                     goingScreen: () {
                                         Navigator.of(context).push(
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     WithdrawCashScreen(
                                                       modelUser: snapshot.data!,
                                                     )));
-                                      },
-                                      h: h,
-                                      w: w,
-                                      theicon: FontAwesomeIcons.wallet,
-                                      iconName: "Withraw"),
-                                  SizedBox(
+                                                      }),),
+                                                        SizedBox(
                                     width: w * 0.1,
                                   ),
-                                  HomePageBox(
-                                      h: h,
-                                      w: w,
-                                      iconName: "Message",
+
+                                  //..........................recarge.............//
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: HomePageBox(
+                                        hight: h*0.09,
+                                          width: w,
+                                         iconName: "Message",
                                       theicon:
                                           FontAwesomeIcons.facebookMessenger,
                                       goingScreen: () {
                                         openwhatsapp(context);
-                                      })
-                                ],
-                              ),
+                                      })),
+                                             
+                                      SizedBox(
+                                    width: w * 0.1,
+                                  ),
+
+                                  //..........................recarge.............//
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: HomePageBox(
+                                        hight: h*0.09,
+                                          width: w,
+                                          theicon: FontAwesomeIcons.exclamationCircle,
+                                      iconName: "Notice",
+                                     goingScreen: () {
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    WithdrawCashScreen(
+                                                      modelUser: snapshot.data!,
+                                                    )));
+                                                      }),),
+                                        
+                                   
+                            Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          ElevatedButton(onPressed: ()async{
+            await FirebaseAuth.instance.signOut().then((value) {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginOrSignup()));
+            });
+          }, child: Text("Log out")),
+          ElevatedButton(onPressed: (){}, child: Text("Edit profile")),
+        ],
+      ),
+    ),
                             ],
                           ),
                         ),

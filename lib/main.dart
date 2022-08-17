@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:icbapps/screens/homepage/homescreen.dart';
 import 'package:icbapps/screens/loginorsignup/loginorsignup.dart';
+import 'package:icbapps/splash_screen.dart';
 
 import 'firebase_options.dart';
 
@@ -45,7 +46,7 @@ class MyApp extends StatelessWidget {
           if(snapshot.connectionState==ConnectionState.waiting){
             return const Scaffold(body: Center(child: CircularProgressIndicator(),),);
           }
-          return const LoginOrSignup();
+          return SplashScreen(title: "ICB",);
         }
       ),
     );
