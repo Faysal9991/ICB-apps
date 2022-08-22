@@ -18,6 +18,8 @@ import 'package:icbapps/screens/widgets/home_page_widget.dart';
 import 'package:icbapps/screens/withdraw/withdraw_screen.dart';
 import 'package:icbapps/whats_report.dart';
 
+import '../Notice/notice_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -50,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final double w = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+       
           backgroundColor: Colors.white,
           body: SingleChildScrollView(
               child: StreamBuilder<ModelUser>(
@@ -130,10 +133,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                           child: Text(
                                               "Refarral id: ${snapshot.data!.refarralId}",
                                               style: GoogleFonts.oleoScript(
-                                                  color: Colors.white)))
+                                                  color: Colors.white))),
+                                                
                                     ],
                                   ),
                                 ),
+                                Spacer(),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      children: [
+                                        CircleAvatar(backgroundColor: Colors.purpleAccent,
+                                                          radius: 20,
+                                                       child: IconButton(onPressed: (){Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      const Noticescreen(
+                                                       
+                                                      )));},
+                                                        icon:Icon(FontAwesomeIcons.exclamationCircle,color: Colors.blue,),),   
+                                                        ),
+                                                        Padding(
+                                                          padding: const EdgeInsets.all(8.0),
+                                                          child: Text( "Notice",style: GoogleFonts.lato(color: Colors.white,),)
+                                                        )
+                                      ],
+                                    ),
+                                                    
+                                  )
                               ],
                             ),
                           ).asGlass(),
@@ -151,143 +178,153 @@ class _HomeScreenState extends State<HomeScreen> {
                                     bottomLeft: Radius.circular(300))),
                             child: Padding(
                               padding: EdgeInsets.only(left: w * 0.05),
-                              child: Text("Balance ${snapshot.data!.balance}",
+                              child: Text("Balance ${snapshot.data!.balance}\$",
                                   style: GoogleFonts.oleoScript(
                                       color: Colors.black54)),
                             ),
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsets.only(top: h * 0.32,),
+                          padding: EdgeInsets.only(
+                              top: h * 0.32, left: w * 0.2, right: w * 0.16),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: HomePageBox( 
-                                        hight: h*0.09,
-                                        width: w,
-                                        iconName: "WORk",
-                                        theicon: FontAwesomeIcons.briefcase,
-                                        goingScreen: () {
-                                          Navigator.of(context)
-                                              .push(MaterialPageRoute(
-                                                  builder: (context) => DailyWork(
-                                                        modelUser: snapshot.data!,
-                                                      )));
-                                        }),
+                                child: HomePageBox(
+                                    hight: h * 0.09,
+                                    width: w,
+                                    iconName: "WORk",
+                                    theicon: FontAwesomeIcons.briefcase,
+                                    goingScreen: () {
+                                      Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                              builder: (context) => DailyWork(
+                                                    modelUser: snapshot.data!,
+                                                  )));
+                                    }),
                               ),
-                                SizedBox(
-                                    width: w * 0.1,
-                                  ),
+                              SizedBox(
+                                width: w * 0.1,
+                              ),
 
-                                  //..........................recarge.............//
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: HomePageBox(
-                                        hight: h*0.09,
-                                          width: w,
-                                        iconName: "Recharge",
-                                        theicon: FontAwesomeIcons.bolt,
-                                        goingScreen: () {
-                                          Navigator.of(context).push(
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const RechargeScreen()));
-                                                      }),),
-                                                        SizedBox(
-                                    width: w * 0.1,
-                                  ),
+                              //..........................recarge.............//
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: HomePageBox(
+                                    hight: h * 0.09,
+                                    width: w*0.58,
+                                    iconName: "Recharge",
+                                    theicon: FontAwesomeIcons.bolt,
+                                    goingScreen: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const RechargeScreen()));
+                                    }),
+                              ),
+                              SizedBox(
+                                width: w * 0.1,
+                              ),
 
-                                  //..........................recarge.............//
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: HomePageBox(
-                                        hight: h*0.09,
-                                          width: w,
-                                         iconName: "History",
-                                      theicon: FontAwesomeIcons.history,
-                                      goingScreen: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HistoryScreen(
-                                                      modelUser: snapshot.data!,
-                                                    )));
-                                                      }),),
-                                                       SizedBox(
-                                    width: w * 0.1,
-                                  ),
+                              //..........................recarge.............//
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: HomePageBox(
+                                     hight: h * 0.08,
+                                    width: w*0.5,
+                                    iconName: "History",
+                                    theicon: FontAwesomeIcons.history,
+                                    goingScreen: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  HistoryScreen(
+                                                    modelUser: snapshot.data!,
+                                                  )));
+                                    }),
+                              ),
+                              SizedBox(
+                                width: w * 0.1,
+                              ),
 
-                                  //..........................recarge.............//
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: HomePageBox(
-                                        hight: h*0.09,
-                                          width: w,
-                                          theicon: FontAwesomeIcons.wallet,
-                                      iconName: "Withraw",
-                                     goingScreen: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    WithdrawCashScreen(
-                                                      modelUser: snapshot.data!,
-                                                    )));
-                                                      }),),
-                                                        SizedBox(
-                                    width: w * 0.1,
-                                  ),
+                              //..........................recarge.............//
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: HomePageBox(
+                                    hight: h * 0.075,
+                                    width: w*0.45,
+                                    theicon: FontAwesomeIcons.wallet,
+                                    iconName: "Withraw",
+                                    goingScreen: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  WithdrawCashScreen(
+                                                    modelUser: snapshot.data!,
+                                                  )));
+                                    }),
+                              ),
+                              SizedBox(
+                                width: w * 0.1,
+                              ),
 
-                                  //..........................recarge.............//
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: HomePageBox(
-                                        hight: h*0.09,
-                                          width: w,
-                                         iconName: "Message",
+                              //..........................recarge.............//
+                              Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: HomePageBox(
+                                      hight: h * 0.06,
+                                      width: w*0.4,
+                                      iconSize: 12,
+                                      iconName: "massage",
                                       theicon:
                                           FontAwesomeIcons.facebookMessenger,
                                       goingScreen: () {
                                         openwhatsapp(context);
                                       })),
-                                             
-                                      SizedBox(
-                                    width: w * 0.1,
-                                  ),
 
-                                  //..........................recarge.............//
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: HomePageBox(
-                                        hight: h*0.09,
-                                          width: w,
-                                          theicon: FontAwesomeIcons.exclamationCircle,
-                                      iconName: "Notice",
-                                     goingScreen: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    WithdrawCashScreen(
-                                                      modelUser: snapshot.data!,
-                                                    )));
-                                                      }),),
-                                        
-                                   
-                            Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          ElevatedButton(onPressed: ()async{
-            await FirebaseAuth.instance.signOut().then((value) {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>LoginOrSignup()));
-            });
-          }, child: Text("Log out")),
-          ElevatedButton(onPressed: (){}, child: Text("Edit profile")),
-        ],
-      ),
-    ),
+                              SizedBox(
+                                width: w * 0.1,
+                              ),
+
+                              //..........................recarge.............//
+                              
+
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(height: h*0.04,width: w*0.34,
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomLeft,
+                                        colors: [
+                                          HexColor('#DC54FE'),
+                                          HexColor('#8A02AE')
+                                        ],
+                                      ),
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft:
+                                            Radius.circular(90.0),
+                                        bottomRight:
+                                            Radius.circular(60.0),
+                                      )),
+                                  child: InkWell(
+                                      onTap: () async {
+                                        await FirebaseAuth.instance
+                                            .signOut()
+                                            .then((value) {
+                                          Navigator.of(context)
+                                              .pushReplacement(
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const LoginOrSignup()));
+                                        });
+                                      },
+                                      child: Center(child: Text("log out",style: GoogleFonts.oleoScript(color: Colors.white)))),
+                                ),
+                              ),
                             ],
                           ),
                         ),

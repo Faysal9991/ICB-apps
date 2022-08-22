@@ -10,6 +10,7 @@ class SplashScreen extends StatefulWidget {
   SplashScreen({Key? key, required this.title}) : super(key: key);
 
   final String title;
+  
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -61,7 +62,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Container(
                   height: 140.0,
                   width: 140.0,
-                  child: Center(
+                  child: const Center(
                     child: ClipOval(
                       child: Icon(Icons.android_outlined, size: 128,), //put your logo here
                     ),
@@ -73,7 +74,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       BoxShadow(
                         color: Colors.black.withOpacity(0.3),
                         blurRadius: 2.0,
-                        offset: Offset(5.0, 3.0),
+                        offset: const Offset(5.0, 3.0),
                         spreadRadius: 2.0,
                       )
                     ]
@@ -81,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
             ),
-            Text("Wellcome ICB",style: GoogleFonts.oleoScript(
+            Text("Wellcome ICB \n Family",style: GoogleFonts.oleoScript(
                                                     color: Colors.white),
             )
         ],

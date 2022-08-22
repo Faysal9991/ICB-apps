@@ -35,17 +35,23 @@ class HomePageBox extends StatelessWidget {
                 end: Alignment.bottomLeft,
                 colors: [HexColor('#DC54FE'), HexColor('#8A02AE')],
               ),
-              borderRadius: BorderRadius.circular(10)),
+               borderRadius: new BorderRadius.only(
+                topLeft: const Radius.circular(90.0),
+                bottomRight: const Radius.circular(60.0),
+              )),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                theicon,
-                color: Colors.green,
-                size: iconSize,
+              Padding(
+                padding: EdgeInsets.only(top: h*0.01),
+                child: Icon(
+                  theicon,
+                  color: Color.fromARGB(255, 24, 200, 24),
+                  size: iconSize,
+                ),
               ),
               SizedBox(height: h*0.01,),
-              Text(iconName!, style: GoogleFonts.oleoScript(color: Colors.white))
+              Text(iconName!, style: GoogleFonts.oleoScript(color: Colors.white,fontSize: h*0.013,fontWeight: FontWeight.w600))
             ],
           )),
     );

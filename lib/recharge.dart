@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:icbapps/helper/auth/auth.dart';
 import 'package:icbapps/models/main_admin_model.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+
+
 
 
 class RechargeScreen extends StatefulWidget {
@@ -15,175 +18,305 @@ class _RechargeScreenState extends State<RechargeScreen> {
   FireBase fireBase = FireBase();
   TextEditingController amount = TextEditingController();
   TextEditingController transactionId = TextEditingController();
+ final List<String> items = [
+  '6 Doller',
+  '10 Doller',
+  '25 Doller',
+  '40 Doller',
+];
+String? selectedValue;
   @override
   Widget build(BuildContext context) {
+    
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Recharge"),
+          backgroundColor: Colors.teal,
+          title: Text("Recharge", style: GoogleFonts.oleoScript(
+                                                color: Colors.white)),
           bottom:  TabBar(tabs: [
               Tab(child: Text("Bkash", style: GoogleFonts.oleoScript(
-                                                color: Colors.black)),),
+                                                color: Colors.white)),),
               Tab(child: Text("Roket", style: GoogleFonts.oleoScript(
-                                                color: Colors.black)),),
+                                                color: Colors.white)),),
               Tab(child: Text("Nogod", style: GoogleFonts.oleoScript(
-                                                color: Colors.black)),),
+                                                color: Colors.white)),),
               Tab(child: Text("Binance", style: GoogleFonts.oleoScript(
-                                                color: Colors.black)),),
+                                                color: Colors.white)),),
               ]),
         ),
         body: TabBarView(children: [
-        Container(height: 200,
+        SizedBox(height: 200,
         child: Column(
           children: [
             StreamBuilder<MainAdminModel>(
               stream: fireBase.mainadmindatas(),
               builder: (context, snapshot) {
-                return snapshot.hasData?Text("Send Money to this number ${snapshot.data!.bkashnumber}"):CircularProgressIndicator();
+                return snapshot.hasData?Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Send Money to this number ${snapshot.data!.bkashnumber}"),
+                ):const CircularProgressIndicator();
     
               }
             ),
-            TextField(
-              controller: amount,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: "6 Doller pakage",
-                border: OutlineInputBorder()
-              ),
+     DropdownButtonHideUnderline(
+        child: DropdownButton2(
+          hint: Text(
+            'Select Pakage',
+            style: TextStyle(
+              fontSize: 14,
+              color: Theme
+                      .of(context)
+                      .hintColor,
+            ),
+          ),
+          items: items
+                  .map((item) =>
+                  DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ))
+                  .toList(),
+          value: selectedValue,
+          onChanged: (value) {
+            setState(() {
+              selectedValue = value as String;
+            });
+          },
+          buttonHeight: 40,
+          buttonWidth: 140,
+          itemHeight: 40,
+        ),
+      ),
+     Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: transactionId,
+                decoration: const InputDecoration(
+                  hintText: "input your transactionId",
+                    border: OutlineInputBorder()
+                ),
     
+              ),
             ),
     
-            TextField(
-              controller: transactionId,
-              decoration: InputDecoration(
-                hintText: "input your transactionId",
-                  border: OutlineInputBorder()
-              ),
-    
-            ),
-    
-            TextButton(onPressed: (){
+            ElevatedButton(onPressed: (){
               fireBase.rechargeTobalance(amount.text.trim(), transactionId.text.trim()).then((value){
                 print(value);
               });
     
-            }, child: Text("Send request"))
+            }, child: const Text("Send request"))
     
           ],
         ),
         ),
-        Container(height: 200,
+        SizedBox(height: 200,
         child: Column(
           children: [
             StreamBuilder<MainAdminModel>(
               stream: fireBase.mainadmindatas(),
               builder: (context, snapshot) {
-                return snapshot.hasData?Text("Send Money to this number ${snapshot.data!.bkashnumber}"):CircularProgressIndicator();
+                return snapshot.hasData?Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Send Money to this number ${snapshot.data!.bkashnumber}"),
+                ):const CircularProgressIndicator();
     
               }
             ),
-            TextField(
-              controller: amount,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: "6 Doller pakage",
-                border: OutlineInputBorder()
-              ),
+        DropdownButtonHideUnderline(
+        child: DropdownButton2(
+          hint: Text(
+            'Select Item',
+            style: TextStyle(
+              fontSize: 14,
+              color: Theme
+                      .of(context)
+                      .hintColor,
+            ),
+          ),
+          items: items
+                  .map((item) =>
+                  DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ))
+                  .toList(),
+          value: selectedValue,
+          onChanged: (value) {
+            setState(() {
+              selectedValue = value as String;
+            });
+          },
+          buttonHeight: 40,
+          buttonWidth: 140,
+          itemHeight: 40,
+        ),
+      ),
+     Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: transactionId,
+                decoration: const InputDecoration(
+                  hintText: "input your transactionId",
+                    border: OutlineInputBorder()
+                ),
     
+              ),
             ),
     
-            TextField(
-              controller: transactionId,
-              decoration: InputDecoration(
-                hintText: "input your transactionId",
-                  border: OutlineInputBorder()
-              ),
-    
-            ),
-    
-            TextButton(onPressed: (){
+            ElevatedButton(onPressed: (){
               fireBase.rechargeTobalance(amount.text.trim(), transactionId.text.trim()).then((value){
                 print(value);
               });
     
-            }, child: Text("Send request"))
+            }, child: const Text("Send request"))
     
           ],
         ),),
-        Container(height: 200,
+        SizedBox(height: 200,
         child: Column(
           children: [
             StreamBuilder<MainAdminModel>(
               stream: fireBase.mainadmindatas(),
               builder: (context, snapshot) {
-                return snapshot.hasData?Text("Send Money to this number ${snapshot.data!.bkashnumber}"):CircularProgressIndicator();
+                return snapshot.hasData?Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("Send Money to this number ${snapshot.data!.bkashnumber}"),
+                ):const CircularProgressIndicator();
     
               }
             ),
-            TextField(
-              controller: amount,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: "6 Doller pakage",
-                border: OutlineInputBorder()
-              ),
+   DropdownButtonHideUnderline(
+        child: DropdownButton2(
+          hint: Text(
+            'Select Item',
+            style: TextStyle(
+              fontSize: 14,
+              color: Theme
+                      .of(context)
+                      .hintColor,
+            ),
+          ),
+          items: items
+                  .map((item) =>
+                  DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ))
+                  .toList(),
+          value: selectedValue,
+          onChanged: (value) {
+            setState(() {
+              selectedValue = value as String;
+            });
+          },
+          buttonHeight: 40,
+          buttonWidth: 140,
+          itemHeight: 40,
+        ),
+      ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: transactionId,
+                decoration: const InputDecoration(
+                  hintText: "input your transactionId",
+                    border: OutlineInputBorder()
+                ),
     
+              ),
             ),
     
-            TextField(
-              controller: transactionId,
-              decoration: InputDecoration(
-                hintText: "input your transactionId",
-                  border: OutlineInputBorder()
-              ),
-    
-            ),
-    
-            TextButton(onPressed: (){
+            ElevatedButton(onPressed: (){
               fireBase.rechargeTobalance(amount.text.trim(), transactionId.text.trim()).then((value){
                 print(value);
               });
     
-            }, child: Text("Send request"))
+            }, child: const Text("Send request"))
     
           ],
         ),
-        ),Container(height: 200,
+        ),SizedBox(height: 200,
         child: Column(
           children: [
             StreamBuilder<MainAdminModel>(
               stream: fireBase.mainadmindatas(),
               builder: (context, snapshot) {
-                return snapshot.hasData?Text("Binance acount : bc1q7x8xm62c2e9aa6s96h20086cl80y7er7up4k79"):CircularProgressIndicator();
+                return snapshot.hasData?const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text("Binance acount : bc1q7x8xm62c2e9aa6s96h20086cl80y7er7up4k79"),
+                ):const CircularProgressIndicator();
     
               }
             ),
-            TextField(
-              controller: amount,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: "6 Doller pakage",
-                border: OutlineInputBorder()
-              ),
+      DropdownButtonHideUnderline(
+        child: DropdownButton2(
+          hint: Text(
+            'Select Item',
+            style: TextStyle(
+              fontSize: 14,
+              color: Theme
+                      .of(context)
+                      .hintColor,
+            ),
+          ),
+          items: items
+                  .map((item) =>
+                  DropdownMenuItem<String>(
+                    value: item,
+                    child: Text(
+                      item,
+                      style: const TextStyle(
+                        fontSize: 14,
+                      ),
+                    ),
+                  ))
+                  .toList(),
+          value: selectedValue,
+          onChanged: (value) {
+            setState(() {
+              selectedValue = value as String;
+            });
+          },
+          buttonHeight: 40,
+          buttonWidth: 140,
+          itemHeight: 40,
+        ),
+      ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                controller: transactionId,
+                decoration: const InputDecoration(
+                  hintText: "input your transactionId",
+                    border: OutlineInputBorder()
+                ),
     
+              ),
             ),
     
-            TextField(
-              controller: transactionId,
-              decoration: InputDecoration(
-                hintText: "input your transactionId",
-                  border: OutlineInputBorder()
-              ),
-    
-            ),
-    
-            TextButton(onPressed: (){
+            ElevatedButton(onPressed: (){
               fireBase.rechargeTobalance(amount.text.trim(), transactionId.text.trim()).then((value){
                 print(value);
               });
     
-            }, child: Text("Send request"))
+            }, child: const Text("Send request"))
     
           ],
         ),
